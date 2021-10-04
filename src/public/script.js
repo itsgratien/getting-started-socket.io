@@ -1,8 +1,11 @@
 const socket = io();
 
 var form = document.getElementById('form');
+
 var input = document.getElementById('input');
+
 var messages = document.getElementById('messages');
+
 const alertEl = document.querySelector('.append');
 
 form.addEventListener('submit', function (e) {
@@ -39,4 +42,4 @@ socket.on('new user', (msg) => {
 
 setInterval(() => {
   alertEl.remove();
-}, 3000);
+}, 5000);
