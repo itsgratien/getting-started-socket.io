@@ -1,0 +1,19 @@
+{
+  "name": "getting-started-socket.io",
+  "version": "1.0.0",
+  "description": "socket io getting started",
+  "main": "index.js",
+  "repository": "https://github.com/itsgratien/getting-started-socket.io.git",
+  "author": "gratien",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^4.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  }
+}
