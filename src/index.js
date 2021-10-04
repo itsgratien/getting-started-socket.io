@@ -77,6 +77,12 @@ app.get('/message', isAuth, (req, res) =>
   res.render('message', { user: req.session.user })
 );
 
+app.get('/logout', isAuth, (req, res) => {
+  req.session.destroy();
+
+  return res.redirect('/');
+});
+
 // socket
 io.on('connection', (socket) => {
   // broadcast message when new user is connected
