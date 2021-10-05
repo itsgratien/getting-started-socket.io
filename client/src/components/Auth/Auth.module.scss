@@ -1,0 +1,27 @@
+.login {
+  width: 300px;
+  margin: auto;
+  margin-top: 80px;
+  .loginForm {
+    width: 100%;
+    margin-top: 20px;
+    input,
+    button {
+      height: 55px;
+      border-radius: 10px;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    input {
+      border: 1px solid #96baff;
+      padding: 0 0 0 20px;
+      &::placeholder {
+        color: #96baff;
+      }
+    }
+    .loginBtn {
+      background-color: #256fff;
+      text-align: center;
+    }
+  }
+}

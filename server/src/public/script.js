@@ -1,17 +1,19 @@
 const socket = io();
 
-var form = document.getElementById('form');
+const form = document.getElementById('form');
 
-var input = document.getElementById('input');
+const input = document.getElementById('input');
 
-var messages = document.getElementById('messages');
+const messages = document.getElementById('messages');
 
 const alertEl = document.querySelector('.append');
 
-form.addEventListener('submit', function (e) {
+form.addEventListener('submit', (e) => {
   e.preventDefault();
-  if (input.value) {
-    socket.emit('chat message', input.value);
+  const username = document.querySelector('.username');
+
+  if (input.value && username) {
+    socket.emit('send-message', { message: input.value, username });
     input.value = '';
   }
 });
