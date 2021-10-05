@@ -3,6 +3,7 @@ import style from './Message.module.scss';
 import { Logo } from '../Shared';
 import classname from 'classnames';
 import { OnlineUsers } from './OnlineUsers';
+import { MessageDetail } from './MessageDetail';
 
 export const Message = () => {
   return (
@@ -28,6 +29,7 @@ export const Message = () => {
       </header>
       <div className={style.messages}>
         <OnlineUsers />
+        <MessageDetail />
       </div>
     </>
   );

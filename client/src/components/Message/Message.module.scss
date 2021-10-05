@@ -10,6 +10,93 @@
 }
 
 .messages {
-  width: 700px;
+  width: 800px;
   margin: auto;
+  padding-top: 150px;
+  display: flex;
+  flex-wrap: nowrap;
+}
+.onlineUsers {
+  padding: 15px;
+  border: 1px solid #f8f8f8;
+  min-height: 500px;
+  max-height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 30%;
+  border-radius: 10px;
+  li {
+    border: 1px solid #ebebeb;
+    border-radius: 10px;
+    padding: 10px 10px 10px 20px;
+    cursor: pointer;
+    margin: 15px 0px;
+    span {
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .online {
+      width: 15px;
+      height: 15px;
+      border-radius: 100%;
+      background-color: #256fff;
+    }
+  }
+}
+.messageDetail {
+  margin-left: 5%;
+  width: 65%;
+  border: 1px solid #f8f8f8;
+  border-radius: 10px;
+  .chats {
+    height: 550px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 15px;
+    li {
+      border: 1px solid #f8f8f8;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+      span {
+        color: #000000;
+        &:first-child {
+          font-size: 14px;
+        }
+      }
+      .msg {
+        font-size: 13px;
+      }
+      .date {
+        margin-top: 10px;
+        margin-right: 15px;
+      }
+    }
+  }
+  .reply {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    textarea,
+    button {
+      font-size: 14px;
+    }
+    textarea {
+      border: 1px solid #96baff;
+      border-radius: 10px;
+      height: 65px;
+      padding: 10px;
+    }
+    button {
+      background-color: #256fff;
+      color: white;
+      font-weight: bold;
+      border-radius: 10px;
+      height: 40px;
+      padding: 0 10px;
+      width: 80px;
+      margin-top: 13px;
+    }
+  }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from 'assets/logo.png';
+import logo from '../../assets/logo.png';
 import style from './Shared.module.scss';
 import classname from 'classnames';
 
