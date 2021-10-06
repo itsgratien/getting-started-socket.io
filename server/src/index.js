@@ -4,6 +4,8 @@ const http = require('http');
 
 const { Server } = require('socket.io');
 
+const cors = require('cors');
+
 const { connectDb } = require('./config/database');
 
 const userModel = require('./model/user');
@@ -16,23 +18,45 @@ const io = new Server(server, { cors: { origin: ['http://localhost:3000'] } });
 
 const port = process.env.PORT || 8000;
 
+app.use(cors());
+
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 
-const isAuth = (req, res, next) => {
-  if (!req.session.user) {
-    return res.redirect('/');
+const isAuth = async (req, res, next) => {
+  if (req.headers['authorization'] && req.headers['authorization'].length > 0) {
+    const d = decodeToken(req.headers['authorization']);
+
+    if (d) {
+      const f = await userModel.findById(d._id);
+
+      req.user = f;
+
+      next();
+    } else {
+      return res.status(401).json({ error: 'Unauthorized access' });
+    }
+  } else {
+    return res.status(401).json({ error: 'Unauthorized access' });
   }
-  next();
 };
 
 const isUnAuth = (req, res, next) => {
-  if (req.session.user) {
-    return res.redirect('/message');
+  if (req.headers['authorization'] && req.headers['authorization'].length > 0) {
+    const d = decodeToken(req.headers['authorization']);
+
+    if (d && typeof d === 'object') {
+      return res.status(401).json({ error: 'You are authenticated' });
+    }
   }
   next();
 };
+const generateToken = (value) =>
+  new Buffer(JSON.stringify(value)).toString('base64');
+
+const decodeToken = (value) =>
+  JSON.parse(new Buffer(value, 'base64').toString());
 
 app.post('/', isUnAuth, async (req, res) => {
   try {
@@ -41,25 +65,27 @@ app.post('/', isUnAuth, async (req, res) => {
     const find = await userModel.findOne({ username });
 
     if (!find) {
-      return res.render('index', { error: 'Authentication failed' });
+      const add = await userModel.create({ username });
+
+      return res.json({
+        data: add,
+        token: generateToken({ _id: add._id, username: add.username }),
+      });
     }
 
-    req.session.user = find;
-
-    return res.redirect('/message');
+    return res.json({
+      data: find,
+      token: generateToken({ _id: find._id, username: find.username }),
+    });
   } catch (error) {
-    return res.render('index', { error: 'Authentication failed' });
+    return res
+      .status(500)
+      .json({ error: `Authentication failed ${error.message}` });
   }
 });
 
-app.get('/message', isAuth, (req, res) =>
-  res.render('message', { user: req.session.user })
-);
-
-app.get('/logout', isAuth, (req, res) => {
-  req.session.destroy();
-
-  return res.redirect('/');
+app.get('/me', isAuth, (req, res) => {
+  return res.json({ data: req.user });
 });
 
 // socket
